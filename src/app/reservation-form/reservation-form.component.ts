@@ -37,12 +37,16 @@ export class ReservationFormComponent implements OnInit {
 
     if(id){
 
-      let reservation = this.reservationService.getReservation(id);
+      this.reservationService.getReservation(id).subscribe(reservation => {
+        
+        if(reservation)
 
-      if(reservation){
+          this.reservationForm.patchValue(reservation)
+        
 
-        this.reservationForm.patchValue(reservation);
-      }
+      })
+
+      
     }
     
   }
@@ -59,12 +63,20 @@ export class ReservationFormComponent implements OnInit {
     if(id){
       reservation.id = id
 
-      this.reservationService.updateReservation(reservation);
+      this.reservationService.updateReservation(reservation).subscribe(reservation => {
+
+        console.log("Update request got processed")
+
+      })
 
     }
     else{
 
-      this.reservationService.addReservation(reservation)
+      this.reservationService.addReservation(reservation).subscribe(reservation => {
+
+        console.log("Post request got processed")
+
+      })
     }
       this.router.navigate(['/list']);
     }

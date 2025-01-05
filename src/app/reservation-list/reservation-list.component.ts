@@ -16,13 +16,19 @@ export class ReservationListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.reservations = this.reservationService.reservations;
+    this.reservationService.getReservations().subscribe(i => {
+
+      this.reservations = i
+    });
     
   }
 
   deleteReservation(id : string) : void {
 
-    this.reservationService.deleteReservation(id);
+    this.reservationService.deleteReservation(id).subscribe(() => {
+
+      console.log("Delete request got processed")
+    })
 
   }
 
